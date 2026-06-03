@@ -1,6 +1,8 @@
 # Calculator App 
 
 A responsive calculator built using HTML, CSS, and JavaScript.
+Live at :
+ https://dixitas3mwal.github.io/calculator-/
 
 ## Features
 
