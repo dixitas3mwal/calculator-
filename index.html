@@ -188,6 +188,7 @@ style="grid-column:span 2;">
 
 <script>
 
+
 let display =
 document.getElementById("display");
 
@@ -200,7 +201,7 @@ function append(digit){
     let str =
     display.value;
 
-    // Prevent operator at beginning
+    // Don't allow operator at beginning
 
     if(
         str.length === 0 &&
@@ -287,14 +288,31 @@ function deleteLast(){
 
 function square(){
 
+    let str =
+    display.value;
+
+    if(str === ""){
+        return;
+    }
+
+    let lastDigit =
+    str[str.length - 1];
+
+    // Don't square if expression ends with operator
+
+    if(
+        lastDigit === "+" ||
+        lastDigit === "-" ||
+        lastDigit === "*" ||
+        lastDigit === "/"
+    ){
+        return;
+    }
+
     try{
 
-        if(display.value === ""){
-            return;
-        }
-
         let value =
-        eval(display.value);
+        eval(str);
 
         display.value =
         value * value;
@@ -320,16 +338,14 @@ function calculate(){
     let lastDigit =
     str[str.length - 1];
 
+    // Don't calculate if expression ends with operator
+
     if(
         lastDigit === "+" ||
         lastDigit === "-" ||
         lastDigit === "*" ||
         lastDigit === "/"
     ){
-
-        display.value =
-        "Error";
-
         return;
     }
 
@@ -384,8 +400,7 @@ function(event){
     }
 });
 
-    
-
+                    
         
 
 </script>
