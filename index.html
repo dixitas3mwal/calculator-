@@ -189,6 +189,8 @@ style="grid-column:span 2;">
 <script>
 
 
+<script>
+
 let display =
 document.getElementById("display");
 
@@ -201,13 +203,12 @@ function append(digit){
     let str =
     display.value;
 
-    // Don't allow operator at beginning
+    // Allow only negative sign at start
 
     if(
         str.length === 0 &&
         (
             digit === "+" ||
-            digit === "-" ||
             digit === "*" ||
             digit === "/"
         )
@@ -259,6 +260,15 @@ function append(digit){
             lastDigit === "/"
         ){
 
+            // Allow starting negative number
+
+            if(
+                str.length === 1 &&
+                str[0] === "-"
+            ){
+                return;
+            }
+
             display.value =
             str.substring(
                 0,
@@ -279,6 +289,12 @@ function clearDisplay(){
 
 function deleteLast(){
 
+    if(display.value === "Error"){
+
+        display.value = "";
+        return;
+    }
+
     display.value =
     display.value.substring(
         0,
@@ -298,8 +314,6 @@ function square(){
     let lastDigit =
     str[str.length - 1];
 
-    // Don't square if expression ends with operator
-
     if(
         lastDigit === "+" ||
         lastDigit === "-" ||
@@ -315,7 +329,10 @@ function square(){
         eval(str);
 
         display.value =
-        value * value;
+        parseFloat(
+        (value * value)
+        .toFixed(10)
+        );
 
     }
 
@@ -338,8 +355,6 @@ function calculate(){
     let lastDigit =
     str[str.length - 1];
 
-    // Don't calculate if expression ends with operator
-
     if(
         lastDigit === "+" ||
         lastDigit === "-" ||
@@ -351,8 +366,13 @@ function calculate(){
 
     try{
 
-        display.value =
+        let result =
         eval(str);
+
+        display.value =
+        parseFloat(
+        result.toFixed(10)
+        );
 
     }
 
@@ -379,7 +399,8 @@ function(event){
     }
 
     else if(
-        key === "Enter"
+        key === "Enter" ||
+        key === "="
     ){
 
         calculate();
@@ -399,6 +420,8 @@ function(event){
         clearDisplay();
     }
 });
+
+</script>
 
                     
         
